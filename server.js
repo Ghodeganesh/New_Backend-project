@@ -2,8 +2,11 @@ const mongoose = require("mongoose")
 const express = require("express")
 const dotenv = require("dotenv").config()
 const bcryp = require("bcryptjs")
+const bodyParser = require('body-parser');
 const user_module = require("./models/user.model.js")
 const app = express()
+
+
 
 
 // MongoDb Connection Startes.....
@@ -19,6 +22,11 @@ db.once("open", () => {
     console.log("DataBase Connected!!")
     init()
 })
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+require('./routes/user.js')(app)
+// user.js
+
 
 // Mongodb Connection Ends Here......
 
