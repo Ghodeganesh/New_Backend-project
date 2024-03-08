@@ -7,9 +7,10 @@ const user_module = require("./models/user.model.js")
 const app = express()
 
 
-
-
-// MongoDb Connection Startes.....
+app.use(express.json())
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+// MongoDb Connectsion Startes.....
 
 mongoose.connect(process.env.DB_URL)
 
@@ -22,8 +23,7 @@ db.once("open", () => {
     console.log("DataBase Connected!!")
     init()
 })
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+
 require('./routes/user.js')(app)
 // user.js
 
