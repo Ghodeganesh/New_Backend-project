@@ -1,29 +1,36 @@
-const user_module = require("../models/user.model")
-const bcrypt = require("bcryptjs")
+const mongoose = require("mongoose")
 
+const user_model = require('../models/user.model')
 
-async function handlerCreateUser(req,res) {
+const handlerReadUsers = async (req, res) => {
+    const data = await user_model.userData.find()
+    res.status(200).send(data)
 
-    const req_body = req.body;
- 
+}
+const handlerCreateUsers = async (req, res) => {
+    const data = req.body
+    const user = await user_model.userData.create(data)
+    res.send(data).status(200)
 
-    const obj={
-        name: req_body.name,
-        userId: req_body.userId,
-        userType: req_body.userType,
-        email: req_body.email,
-        password: bcrypt.hashSync(req_body.password, 8)
-    }
+}
+const handleParameterData = async (req, res) => {
     try {
-        const data= await user_module.create(obj)
-        console.log(data)
-        res.status(200).send(data)
+        const workType = req.params.workType
+        if (workType == "chef" || workType == "manager" || workType == "waiter") {
+          const rdata = await user_model.userData.find({ work: workType })
+            res.status(203).send(rdata)
+        }
+        else {
+            res.status(404).send("invalid WorkTye Provided!!!")
+        }
     } catch (error) {
-        console.log(error)
+        console.log("erorr somthing wents wrong", error)
+
     }
-  
 }
 
 module.exports = {
-    handlerCreateUser,
+    handlerReadUsers,
+    handlerCreateUsers,
+    handleParameterData
 }

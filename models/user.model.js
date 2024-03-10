@@ -3,36 +3,28 @@ const mongoose = require("mongoose")
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        require: true
-    },
-    password: {
-        type: String,
         require: true,
-        unique: true,
+
     },
     email: {
         type: String,
+        require: true,
         unique: true,
-        lowrcase: true,
-        require: true,
-        minLenght: 8
+        lowrcase: true
     },
-    userId: {
-        type: String,
-        require: true
-    },
-    userType: {
+    work: {
         type: String,
         require: true,
-        default: "CUSTOMER",
-        enum: ["CUSTOMER", "ADMIN"]
-    }
-},
-    {
-        timestamps: true,
-        versionKey: false
-    })
+        enum:['chef','manager','waiter']
+    },
+    
+}, {
+    timestamps: true
+})
 
-const user = mongoose.model("user", userSchema)
 
-module.exports=user
+const userData = mongoose.model("new_user", userSchema)
+
+module.exports = {
+    userData
+}
