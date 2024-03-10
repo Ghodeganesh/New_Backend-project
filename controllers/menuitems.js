@@ -24,8 +24,20 @@ const handlerReadMenu = async (req, res) => {
     }
 
 }
+const handlerGiveName = async (req, res) => {
+
+    try {
+        const menu = await menudata.menuItems.find()
+        res.status(201).send(menu)
+
+    } catch (error) {
+        console.log("Erorr While Reading MenuItems", error)
+    }
+
+}
 
 module.exports = {
     handlerCreateMenu,
-    handlerReadMenu
+    handlerReadMenu,
+    handlerGiveName
 }
